@@ -1,0 +1,6 @@
+Estrelas:
+Nome: desconhecido(449, 235), Coordenadas: (449, 235)
+Nome: desconhecido(579, 447), Coordenadas: (579, 447)
+Nome: desconhecido(308, 334), Coordenadas: (308, 334)
+Nome: desconhecido(567, 148), Coordenadas: (567, 148)
+Nome: desconhecido(264, 142), Coordenadas: (264, 142)

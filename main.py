@@ -17,6 +17,7 @@ pygame.mixer.music.load("Space_Machine_Power.mp3")
 pygame.mixer.music.play(-1)
 circles = []
 lines = []
+estrelas = {}
 
 while running:
     tela.blit(fundo, (0, 0))
@@ -31,6 +32,7 @@ while running:
             if item is None or item.strip() == "":
                 item = "desconhecido" + str((x, y))
             circles.append((x, y, item))
+            estrelas[item] = (x, y)
             print(item)
 
     for circle in circles:
@@ -41,12 +43,21 @@ while running:
         tela.blit(text, (x + 25, y - 10))
 
     if len(circles) >= 2:
-        lines = list(zip(circles[:-1][:2], circles[1:]))
+        lines = [(circles[i][:2], circles[i+1][:2]) for i in range(len(circles) - 1)]
 
     for line in lines:
-        pygame.draw.line(tela, branco, line[0][:2], line[1][:2], 2)
+        pygame.draw.line(tela, branco, line[0], line[1], 2)
 
     pygame.display.update()
     clock.tick(40)
+
+    
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_F10]:
+        
+        with open("dados.txt", "w") as file:
+            file.write("Estrelas:\n")
+            for estrela, coordenadas in estrelas.items():
+                file.write(f"Nome: {estrela}, Coordenadas: {coordenadas}\n")
 
 pygame.quit()
