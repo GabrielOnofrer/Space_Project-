@@ -4,6 +4,7 @@ from tkinter import simpledialog
 pygame.init()
 tamanho = (800, 500)
 branco = (255, 255, 255)
+preto = (0, 0, 0)
 clock = pygame.time.Clock()
 tela = pygame.display.set_mode(tamanho)
 pygame.display.set_caption("Projeto Space")
@@ -26,22 +27,24 @@ while running:
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             x, y = pygame.mouse.get_pos()
-            circles.append((x, y))
-        elif event.type == pygame.MOUSEBUTTONUP:
-            pos = pygame.mouse.get_pos()
             item = simpledialog.askstring("Space", "Nome da Estrela")
             if item is None or item.strip() == "":
-                item = "desconhecido" + str(pos)
+                item = "desconhecido" + str((x, y))
+            circles.append((x, y, item))
             print(item)
 
     for circle in circles:
-        pygame.draw.circle(tela, branco, circle, 20)
+        x, y, item = circle
+        pygame.draw.circle(tela, branco, (x, y), 20)
+        font = pygame.font.Font(None, 20)
+        text = font.render(item, True, preto)
+        tela.blit(text, (x + 25, y - 10))
 
     if len(circles) >= 2:
-        lines = list(zip(circles[:-1], circles[1:]))  # Cria uma lista de pares de coordenadas consecutivas
+        lines = list(zip(circles[:-1][:2], circles[1:]))
 
     for line in lines:
-        pygame.draw.line(tela, branco, line[0], line[1], 2)
+        pygame.draw.line(tela, branco, line[0][:2], line[1][:2], 2)
 
     pygame.display.update()
     clock.tick(40)
